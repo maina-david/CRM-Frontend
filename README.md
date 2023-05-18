@@ -1,5 +1,3 @@
-# Callcenter
-
 ## Project setup
 
 ```
