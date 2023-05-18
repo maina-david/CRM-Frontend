@@ -1,0 +1,162 @@
+:root {
+}
+
+html,
+body {
+  margin: 0px;
+  padding: 0px;
+}
+
+.drag-drawflow {
+  line-height: 50px;
+  border-bottom: 1px solid var(--border-color);
+  padding-left: 20px;
+  cursor: move;
+  user-select: none;
+}
+
+.btn-export {
+  float: right;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: white;
+  font-weight: bold;
+  border: 1px solid #0e5ba3;
+  background: #4ea9ff;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  z-index: 5;
+}
+
+.btn-clear {
+  float: right;
+  position: absolute;
+  top: 10px;
+  right: 85px;
+  color: white;
+  font-weight: bold;
+  border: 1px solid #96015b;
+  background: #e3195a;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  z-index: 5;
+}
+
+.btn-lock {
+  float: right;
+  position: absolute;
+  bottom: 10px;
+  right: 140px;
+  display: flex;
+  font-size: 24px;
+  color: white;
+  padding: 5px 10px;
+  background: #555555;
+  border-radius: 4px;
+  border-right: 1px solid var(--border-color);
+  z-index: 5;
+  cursor: pointer;
+}
+
+#drawflow {
+  background: var(--background-color);
+}
+
+@media only screen and (max-width: 768px) {
+  .col {
+    width: 50px;
+  }
+  .col .drag-drawflow span {
+    display: none;
+  }
+  #drawflow {
+    width: calc(100vw - 51px);
+  }
+}
+
+/* Editing Drawflow */
+
+.drawflow .drawflow-node {
+  background: var(--background-color);
+  border: 1px solid var(--border-color);
+  -webkit-box-shadow: 0 2px 15px 2px var(--border-color);
+  box-shadow: 0 2px 15px 2px var(--border-color);
+  padding: 0px;
+  width: 200px;
+}
+
+.drawflow .drawflow-node.selected {
+  background: white;
+  border: 1px solid #4ea9ff;
+  -webkit-box-shadow: 0 2px 20px 2px #4ea9ff;
+  box-shadow: 0 2px 20px 2px #4ea9ff;
+}
+
+.drawflow .drawflow-node.selected .title-box {
+  color: #22598c;
+  /*border-bottom: 1px solid #4ea9ff;*/
+}
+
+.drawflow .connection .main-path {
+  stroke: #4ea9ff;
+  stroke-width: 3px;
+}
+
+.drawflow .drawflow-node .input,
+.drawflow .drawflow-node .output {
+
+  border: 2px solid var(--border-color);
+}
+
+.drawflow .drawflow-node .input:hover,
+.drawflow .drawflow-node .output:hover {
+  background: #4ea9ff;
+}
+
+.drawflow > .drawflow-delete {
+  border: 2px solid #43b993;
+  background: white;
+  color: #43b993;
+  -webkit-box-shadow: 0 2px 20px 2px #43b993;
+  box-shadow: 0 2px 20px 2px #43b993;
+}
+
+.drawflow-delete {
+  border: 2px solid #4ea9ff;
+  background: white;
+  color: #4ea9ff;
+  -webkit-box-shadow: 0 2px 20px 2px #4ea9ff;
+  box-shadow: 0 2px 20px 2px #4ea9ff;
+}
+
+.drawflow-node.personalized {
+  background: red;
+  height: 200px;
+  text-align: center;
+  color: white;
+}
+.drawflow-node.personalized .input {
+  background: yellow;
+}
+.drawflow-node.personalized .output {
+  background: green;
+}
+
+.drawflow-node.personalized.selected {
+  background: blue;
+}
+
+.drawflow .connection .point {
+  stroke: var(--border-color);
+  stroke-width: 2;
+  fill: white;
+  transform: translate(-9999px, -9999px);
+}
+
+.drawflow .connection .point.selected,
+.drawflow .connection .point:hover {
+  fill: #4ea9ff;
+}

@@ -1,0 +1,221 @@
+<template>
+  <div class="overflow-x-auto sm:rounded-lg p-1 mt-2">
+    <div class="flex justify-between">
+      <div>
+        <h1 class="text-sm my-3"></h1>
+        <h1 class="font-semibold text-lg my-3">
+          Agent Activity Report: {{ date }}
+        </h1>
+      </div>
+    </div>
+    <table
+      class="w-full mt-5 text-sm text-left text-gray-500 dark:text-gray-400 p-4"
+    >
+      <thead
+        class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+      >
+        <tr>
+          <th
+            scope="col"
+            class="py-2 px-3"
+            v-for="head in tableHead"
+            :key="head"
+          >
+            {{ head }}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          v-if="tableData.length <= 0"
+          class="bg-white border-b dark:bg-gray-800 text-center p-2 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+        >
+          <div class="p-3 m-3 text-center">
+            You do not have any records to show
+          </div>
+        </tr>
+        <tr
+          class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+          v-else
+          v-for="data in tableData"
+          :key="data"
+        >
+          <td
+            scope="row"
+            class="py-2 px-3 font-medium text-xs text-gray-900 whitespace-nowrap dark:text-white"
+          >
+            {{ data.user }}
+          </td>
+          <td
+            scope="row"
+            class="py-2 px-3 font-medium text-xs text-gray-900 whitespace-nowrap dark:text-white"
+          >
+            <span v-for="queue in data.queues" :key="queue">
+              {{ queue }},
+            </span>
+          </td>
+          <td
+            scope="row"
+            class="py-2 px-3 font-medium text-xs text-gray-900 whitespace-nowrap dark:text-white"
+          >
+            {{ format_time(data.online_time) }}
+          </td>
+          <td
+            scope="row"
+            class="py-2 px-3 font-medium text-xs text-gray-900 whitespace-nowrap dark:text-white"
+          >
+            {{ format_time(data.break_time) }}
+          </td>
+          <td
+            scope="row"
+            class="py-2 px-3 font-medium text-xs text-gray-900 whitespace-nowrap dark:text-white"
+          >
+            <span
+              class="text-red-700 bg-red-100 font-semibold px-2 py-1 m-2"
+              v-if="data.penality > 0"
+              >{{ data.penality }}</span
+            >
+            <span
+              class="text-green-700 bg-green-100 font-semibold px-2 py-1 m-2"
+              v-else
+              >{{ data.penality }}</span
+            >
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <nav
+      class="flex justify-between items-center pt-4"
+      aria-label="Table navigation"
+    >
+      <span class="text-sm font-normal text-gray-500"
+        >Showing
+        <span class="font-semibold text-gray-900"
+          >1- {{ tableData.length }}</span
+        >
+        of
+        <span class="font-semibold text-gray-900">{{
+          tableData.length
+        }}</span></span
+      >
+      <ul class="inline-flex items-center -space-x-px">
+        <li>
+          <a
+            href="#"
+            class="block py-2 px-3 ml-0 leading-tight text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+          >
+            <span class="sr-only">Previous</span>
+            <svg
+              class="w-5 h-5"
+              aria-hidden="true"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+          </a>
+        </li>
+        <li>
+          <a
+            href="#"
+            class="py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+            >1</a
+          >
+        </li>
+        <li>
+          <a
+            href="#"
+            class="py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+            >2</a
+          >
+        </li>
+        <li>
+          <a
+            href="#"
+            aria-current="page"
+            class="z-10 py-2 px-3 leading-tight text-blue-600 bg-blue-50 border border-blue-300 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white"
+            >3</a
+          >
+        </li>
+        <li>
+          <a
+            href="#"
+            class="py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+            >...</a
+          >
+        </li>
+        <li>
+          <a
+            href="#"
+            class="py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+            >100</a
+          >
+        </li>
+        <li>
+          <a
+            href="#"
+            class="block py-2 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+          >
+            <span class="sr-only">Next</span>
+            <svg
+              class="w-5 h-5"
+              aria-hidden="true"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</template>
+
+<script>
+import moment from "moment";
+export default {
+  methods: {
+    format_time(s) {
+      var seconds = s; // or "2000"
+      seconds = parseInt(seconds); //because moment js dont know to handle number in string format
+      var format =
+        Math.floor(moment.duration(seconds, "seconds").asHours()) +
+        ":" +
+        moment.duration(seconds, "seconds").minutes() +
+        ":" +
+        moment.duration(seconds, "seconds").seconds();
+      return format;
+    },
+  },
+  created() {
+    console.log("this is the table data", this.tableData);
+  },
+  name: "AgentActivityTable",
+  props: {
+    date: { type: String },
+    tableHead: {
+      type: Array,
+    },
+    tableData: {
+      type: Array,
+    },
+  },
+  data() {
+    return { options: ["All queues", "Queue 1", "Queue 2", "Queue3"] };
+  },
+  components: {},
+};
+</script>
+
+<style></style>
